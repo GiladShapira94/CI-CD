@@ -1,0 +1,25 @@
+kind: project
+metadata:
+  name: tutorial-shapira
+  created: '2022-09-18T08:50:05.381000'
+spec:
+  functions:
+  - url: data-prep.py
+    name: data-prep
+    kind: job
+    image: mlrun/mlrun
+    handler: breast_cancer_generator
+  - url: trainer.py
+    name: trainer
+    kind: job
+    image: mlrun/mlrun
+    handler: train
+  - url: serving.yaml
+    name: serving
+  workflows: []
+  artifacts: []
+  source: ''
+  desired_state: online
+  owner: shapira
+status:
+  state: online

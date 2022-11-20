@@ -1,0 +1,59 @@
+kind: serving
+metadata:
+  name: serving
+  hash: fffe60f854b60065cf1f93f038251c97eb972178
+  project: tutorial-shapira
+  categories: []
+spec:
+  command: ''
+  args: []
+  image: mlrun/mlrun
+  build:
+    commands: []
+  description: ''
+  disable_auto_mount: false
+  env: []
+  resources:
+    requests:
+      memory: 1Mi
+      cpu: 25m
+    limits:
+      memory: 20Gi
+      cpu: '2'
+  node_selector:
+    app.iguazio.com/lifecycle: non-preemptible
+  priority_class_name: igz-workload-medium
+  preemption_mode: prevent
+  min_replicas: 1
+  max_replicas: 4
+  source: ''
+  function_kind: serving_v2
+  graph:
+    kind: router
+    routes:
+      cancer-classifier:
+        kind: task
+        class_name: mlrun.frameworks.sklearn.SklearnModelServer
+        class_args:
+          model_path: store://artifacts/tutorial-shapira/cancer_classifier:717778837f774f5686aaf8fdebaca12e
+  secret_sources: []
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: app.iguazio.com/lifecycle
+            operator: NotIn
+            values:
+            - preemptible
+          - key: eks.amazonaws.com/capacityType
+            operator: NotIn
+            values:
+            - SPOT
+          - key: node-lifecycle
+            operator: NotIn
+            values:
+            - spot
+  tolerations: null
+  security_context: {}
+verbose: false
