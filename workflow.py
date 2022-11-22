@@ -14,7 +14,7 @@ def pipeline(model_name="cancer-classifier"):
 
     # Train a model using the auto_trainer hub function
     train = mlrun.run_function(
-        "hub://auto_trainer",
+        "trainer",
         inputs={"dataset": ingest.outputs["dataset"]},
         params = {
             "model_class": "sklearn.ensemble.RandomForestClassifier",
