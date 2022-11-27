@@ -9,16 +9,13 @@ spec:
     kind: job
     image: mlrun/mlrun
     handler: breast_cancer_generator
-    with_repo: true
   - url: trainer.py
     name: trainer
     kind: job
     image: mlrun/mlrun
     handler: train
-    with_repo: true
   - url: serving.yaml
     name: serving
-    with_repo: true
   workflows:
   - path: workflow.py
     name: main
